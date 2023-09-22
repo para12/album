@@ -45,8 +45,11 @@ export default function Delete() {
                 <button
                   onClick={async () => {
                     if (deleteKey == docId) {
-                      await deleteDocument(docId);
-                      await deleteCloudinaryImage(publicId);
+                      const result = await deleteCloudinaryImage(publicId);
+                      console.log(result);
+                      if (result && result.result == "ok") {
+                        await deleteDocument(docId);
+                      }
                       router.push("/");
                     } else {
                       setReallyDelete(false);

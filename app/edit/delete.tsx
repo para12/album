@@ -45,9 +45,7 @@ export default function Delete() {
                 <button
                   onClick={async () => {
                     if (deleteKey == docId) {
-                      console.log(publicId);
                       const result = await deleteCloudinaryImage(publicId);
-                      console.log(result);
                       if (result && result.result == "ok") {
                         await deleteDocument(docId);
                       }

@@ -17,7 +17,7 @@ import {
 
 export const getCloudinaryUploadSignature = async () => {
   const timestamp = Math.round(new Date().getTime() / 1000);
-  const signature = v2.utils.api_sign_request(
+  const signature = await v2.utils.api_sign_request(
     { timestamp: timestamp },
     process.env.CLOUDINARY_API_SECRET as string
   );

@@ -1,3 +1,5 @@
+import GoogleProvider from "next-auth/providers/google";
+
 export const dateFormat = (date: string) => {
   return date.replace(/:/g, ".");
 };
@@ -23,3 +25,13 @@ export const GetUsername = (author: string) =>
   author == "hyunwooda@gmail.com" ? "현우" : null;
 
 export const trimDate = (date: string) => date.substring(2, 15);
+
+export const authOptions = {
+  // Configure one or more authentication providers
+  providers: [
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID as string,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+    }),
+  ],
+};

@@ -6,7 +6,7 @@ import MainProvider from "./context/MainContext";
 import Tailwind from "./tailwind";
 import { getServerSession } from "next-auth";
 import SessionProvider from "./context/SessionProvider";
-import { authOptions } from "./common/serverfn";
+import { authOptions } from "./common/util";
 
 const inter = Inter({ subsets: ["latin"] });
 

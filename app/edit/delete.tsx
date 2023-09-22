@@ -2,7 +2,7 @@
 
 import { useContext, useState } from "react";
 import { EditContext } from "../context/EditContext";
-import { deleteDocument } from "../common/serverfn";
+import { deleteCloudinaryImage, deleteDocument } from "../common/serverfn";
 import { useRouter } from "next/navigation";
 
 export default function Delete() {
@@ -45,7 +45,8 @@ export default function Delete() {
                 <button
                   onClick={async () => {
                     if (deleteKey == docId) {
-                      await deleteDocument(docId, publicId);
+                      await deleteDocument(docId);
+                      await deleteCloudinaryImage(publicId);
                       router.push("/");
                     } else {
                       setReallyDelete(false);

@@ -5,6 +5,7 @@ import { EditContext } from "../context/EditContext";
 import { useRouter } from "next/navigation";
 import {
   addDocument,
+  deleteCloudinaryImage,
   getCloudinaryUploadSignature,
   updateDocument,
 } from "../common/serverfn";
@@ -69,7 +70,6 @@ export default function UploadButton() {
 
     const docId = await addDocument(add_info);
     router.push(`/content/${docId}`);
-
   }
 
   async function onClickUpdate(event: React.MouseEvent<HTMLElement>) {
@@ -92,7 +92,10 @@ export default function UploadButton() {
           edited_at: new Date().toLocaleDateString(),
         };
 
-    await updateDocument(docId, update_info, imageChanged, publicId);
+    await updateDocument(docId, update_info);
+    if (imageChanged) {
+      await deleteCloudinaryImage(publicId);
+    }
 
     router.push(`/content/${docId}`);
   }
@@ -101,7 +104,10 @@ export default function UploadButton() {
     <div>
       {uploadMode ? (
         photoUploaded && (
-          <div className="font-medium flex justify-start" aria-current="page">
+          <div
+            className="font-medium flex justify-start hover:text-gray-400 hover:fill-current"
+            aria-current="page"
+          >
             <span className="flex" onClick={onClickUpload}>
               <svg
                 width="24"

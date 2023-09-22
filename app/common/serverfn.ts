@@ -24,14 +24,15 @@ export const getCloudinaryUploadSignature = async () => {
   return { timestamp, signature };
 };
 
-const deleteCloudinaryImage = async (publicId: any) => {
+export const deleteCloudinaryImage = async (publicId: any) => {
   v2.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
     api_key: process.env.CLOUDINARY_API_KEY,
     api_secret: process.env.CLOUDINARY_API_SECRET,
     secure: true,
   });
-  v2.uploader.destroy(publicId);
+  const result = await v2.uploader.destroy(publicId);
+  return result;
 };
 
 export const readDocsWithConstraints = async (s: any) => {
@@ -92,10 +93,9 @@ export const updateComment = async (new_comments: any, docId: any) => {
   }
 };
 
-export const deleteDocument = async (docId: any, publicId: any) => {
+export const deleteDocument = async (docId: any) => {
   try {
     await deleteDoc(doc(db, "article", docId as string));
-    await deleteCloudinaryImage(publicId);
   } catch {
     (error: any) => console.log(error);
   }
@@ -113,18 +113,9 @@ export const addDocument = async (add_info: any) => {
   }
 };
 
-export const updateDocument = async (
-  docId: any,
-  update_info: any,
-  imageChanged: any,
-  publicId: any
-) => {
+export const updateDocument = async (docId: any, update_info: any) => {
   try {
     await updateDoc(doc(db, "article", docId), update_info);
-
-    if (imageChanged) {
-      await deleteCloudinaryImage(publicId);
-    }
   } catch (err) {
     console.log(err);
   }

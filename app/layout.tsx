@@ -5,8 +5,8 @@ import NavBar from "./common/navbar";
 import MainProvider from "./context/MainContext";
 import Tailwind from "./tailwind";
 import { getServerSession } from "next-auth";
-import { authOptions } from "./api/auth/[...nextauth]/route";
 import SessionProvider from "./context/SessionProvider";
+import { authOptions } from "./common/serverfn";
 
 const inter = Inter({ subsets: ["latin"] });
 

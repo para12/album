@@ -14,9 +14,8 @@ import {
   updateDoc,
   where,
 } from "firebase/firestore";
-import GoogleProvider from "next-auth/providers/google";
 
-export const getCloudinaryUploadSignature = () => {
+export const getCloudinaryUploadSignature = async () => {
   const timestamp = Math.round(new Date().getTime() / 1000);
   const signature = v2.utils.api_sign_request(
     { timestamp: timestamp },
@@ -25,7 +24,7 @@ export const getCloudinaryUploadSignature = () => {
   return { timestamp, signature };
 };
 
-export const deleteCloudinaryImage = (publicId: any) => {
+const deleteCloudinaryImage = async (publicId: any) => {
   v2.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
     api_key: process.env.CLOUDINARY_API_KEY,
@@ -131,16 +130,7 @@ export const updateDocument = async (
   }
 };
 
-export const GetUploadPermission = (user: any) => {
-  return user && user.email == "hyunwooda@gmail.com";
+export const GetUploadPermission = async (user: any) => {
+  return user && user.email == process.env.SUPERUSER;
 };
 
-export const authOptions = {
-  // Configure one or more authentication providers
-  providers: [
-    GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID as string,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
-    }),
-  ],
-};

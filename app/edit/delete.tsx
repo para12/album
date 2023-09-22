@@ -43,9 +43,9 @@ export default function Delete() {
               </div>
               <div className="text-center w-2/3 hover:bg-red-500 hover:text-white">
                 <button
-                  onClick={() => {
+                  onClick={async () => {
                     if (deleteKey == docId) {
-                      deleteDocument(docId, publicId);
+                      await deleteDocument(docId, publicId);
                       router.push("/");
                     } else {
                       setReallyDelete(false);

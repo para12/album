@@ -70,23 +70,6 @@ export default function UploadButton() {
     const docId = await addDocument(add_info);
     router.push(`/content/${docId}`);
 
-    // try {
-    //   const r = await addDoc(collection(db, "article"), {
-    //     photo_url: (data as any).secure_url,
-    //     public_id: (data as any).public_id,
-    //     photo_captured_at: photoCapturedAt,
-    //     photo_uploaded_at: new Date().toLocaleDateString(),
-    //     // author: user.email,
-    //   });
-    //   await updateDoc(doc(db, "article", r.id), {
-    //     doc_id: r.id,
-    //     tag: convertTag(tag),
-    //     text,
-    //   });
-    //   router.push(`/content/${r.id}`);
-    // } catch (err) {
-    //   console.log(err);
-    // }
   }
 
   async function onClickUpdate(event: React.MouseEvent<HTMLElement>) {

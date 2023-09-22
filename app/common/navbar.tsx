@@ -16,9 +16,12 @@ const NavBar = () => {
   const [isSuper, setIsSuper] = useState(false);
 
   useEffect(() => {
-    if (GetUploadPermission(session.data?.user)) {
-      setIsSuper(true);
+    async function uploadPermit() {
+      if (await GetUploadPermission(session.data?.user)) {
+        setIsSuper(true);
+      }
     }
+    uploadPermit();
   }, [session.data?.user]);
 
   return (

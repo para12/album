@@ -31,8 +31,19 @@ export const deleteCloudinaryImage = async (publicId: any) => {
     api_secret: process.env.CLOUDINARY_API_SECRET,
     secure: true,
   });
-  const result = await v2.uploader.destroy(publicId);
-  return result;
+  console.log(
+    "server",
+    process.env.CLOUDINARY_CLOUD_NAME,
+    process.env.CLOUDINARY_API_KEY,
+    process.env.CLOUDINARY_API_SECRET
+  );
+  console.log("server", publicId);
+  try {
+    const result = await v2.uploader.destroy(publicId);
+    return result;
+  } catch (e) {
+    console.log(e);
+  }
 };
 
 export const readDocsWithConstraints = async (s: any) => {

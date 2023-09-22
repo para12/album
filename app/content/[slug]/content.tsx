@@ -19,7 +19,7 @@ export default function Content({ docId }: { docId: string }) {
       setItem(i);
     }
     readDoc(docId);
-  }, []);
+  }, [docId]);
 
   return (
     <div className="mx-auto">

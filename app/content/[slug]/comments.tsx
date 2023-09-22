@@ -16,7 +16,7 @@ export default function Comments({ docId }: any) {
       setComments(commentsArr);
     }
     readComments(docId);
-  }, []);
+  }, [docId]);
 
   return (
     <div>

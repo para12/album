@@ -14,6 +14,7 @@ import {
   updateDoc,
   where,
 } from "firebase/firestore";
+import GoogleProvider from "next-auth/providers/google";
 
 export const getCloudinaryUploadSignature = () => {
   const timestamp = Math.round(new Date().getTime() / 1000);
@@ -132,4 +133,14 @@ export const updateDocument = async (
 
 export const GetUploadPermission = (user: any) => {
   return user && user.email == "hyunwooda@gmail.com";
+};
+
+export const authOptions = {
+  // Configure one or more authentication providers
+  providers: [
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID as string,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+    }),
+  ],
 };

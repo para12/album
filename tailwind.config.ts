@@ -25,6 +25,20 @@ const config: Config = {
       container: {
         center: true,
       },
+      keyframes: {
+        bgOpacityOut: {
+          "0%": { opacity: "0" },
+          "100%": { opacity: "1" },
+        },
+        bgOpacityIn: {
+          "0%": { opacity: "0" },
+          "100%": { opacity: "1" },
+        },
+      },
+      animation: {
+        bgColorOut: "bgOpacityOut 0.5s ease-in",
+        bgColorIn: "bgOpacityIn 1s ease-in",
+      },
     },
     screens: {
       sm: "480px",

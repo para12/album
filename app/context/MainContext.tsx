@@ -22,6 +22,7 @@ export default function MainProvider({ children }: any) {
     tag: "",
     text: "",
   });
+  const [loadingBg, setLoadingBg] = useState(false);
   return (
     <MainContext.Provider
       value={{
@@ -29,6 +30,8 @@ export default function MainProvider({ children }: any) {
         setSearchParameter,
         contentState,
         setContentState,
+        loadingBg,
+        setLoadingBg,
       }}
     >
       {children}

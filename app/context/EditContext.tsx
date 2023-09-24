@@ -1,14 +1,14 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { MainContext } from "./MainContext";
 import { addSharpToTag } from "../common/util";
 
 export const EditContext = createContext<any>(undefined);
 
 export default function EditProvider({ children }: any) {
-  const { contentState: item } = useContext(MainContext);
+  const { contentState: item, setLoadingBg } = useContext(MainContext);
   const uploadMode = useSearchParams().get("mode") == "upload";
   const [photoUrl, setPhotoUrl] = useState(
     uploadMode ? undefined : item.photoUrl
@@ -23,6 +23,10 @@ export default function EditProvider({ children }: any) {
   const [imageFile, setImageFile] = useState(undefined);
   const [photoUploaded, setPhotoUploaded] = useState(false);
   const [imageChanged, setImageChanged] = useState(false);
+
+  useEffect(() => {
+    setLoadingBg(false);
+  }, [setLoadingBg]);
   return (
     <EditContext.Provider
       value={{

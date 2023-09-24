@@ -4,9 +4,11 @@ import { useContext, useState } from "react";
 import { EditContext } from "../context/EditContext";
 import { deleteCloudinaryImage, deleteDocument } from "../common/serverfn";
 import { useRouter } from "next/navigation";
+import { MainContext } from "../context/MainContext";
 
 export default function Delete() {
   const { docId, publicId, uploadMode } = useContext(EditContext);
+  const { setLoadingBg } = useContext(MainContext);
   const [reallyDelete, setReallyDelete] = useState(false);
   const [deleteKey, setDeleteKey] = useState("");
   const router = useRouter();
@@ -45,6 +47,7 @@ export default function Delete() {
                 <button
                   onClick={async () => {
                     if (deleteKey == docId) {
+                      setLoadingBg(true);
                       const result = await deleteCloudinaryImage(publicId);
                       if (result && result.result == "ok") {
                         await deleteDocument(docId);

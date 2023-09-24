@@ -11,6 +11,7 @@ import {
 } from "../common/serverfn";
 import { convertTag } from "@/app/common/util";
 import { useSession } from "next-auth/react";
+import { MainContext } from "../context/MainContext";
 
 export default function UploadButton() {
   const {
@@ -24,6 +25,7 @@ export default function UploadButton() {
     publicId,
     imageChanged,
   } = useContext(EditContext);
+  const { setLoadingBg } = useContext(MainContext);
 
   const session = useSession();
   const router = useRouter();
@@ -108,7 +110,13 @@ export default function UploadButton() {
             className="font-medium flex justify-start hover:text-gray-400 hover:fill-current"
             aria-current="page"
           >
-            <span className="flex" onClick={onClickUpload}>
+            <span
+              className="flex"
+              onClick={(e) => {
+                setLoadingBg(true);
+                onClickUpload(e);
+              }}
+            >
               <svg
                 width="24"
                 height="24"
@@ -128,7 +136,13 @@ export default function UploadButton() {
           className="font-medium flex justify-start hover:text-gray-400 hover:fill-current"
           aria-current="page"
         >
-          <span className="flex" onClick={onClickUpdate}>
+          <span
+            className="flex"
+            onClick={(e) => {
+              setLoadingBg(true);
+              onClickUpdate(e);
+            }}
+          >
             <svg
               width="24"
               height="24"

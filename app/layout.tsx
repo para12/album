@@ -7,6 +7,7 @@ import Tailwind from "./tailwind";
 import { getServerSession } from "next-auth";
 import SessionProvider from "./context/SessionProvider";
 import { authOptions } from "./common/util";
+import LoadingBackground from "./common/loading";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,8 +27,9 @@ export default async function RootLayout({
       <body className={inter.className}>
         <MainProvider>
           <SessionProvider session={session}>
+            <LoadingBackground />
             <NavBar />
-          {children}
+            {children}
           </SessionProvider>
         </MainProvider>
       </body>

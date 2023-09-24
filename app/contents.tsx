@@ -9,7 +9,8 @@ import { readDocsWithConstraints } from "./common/serverfn";
 
 export default function Contents() {
   const [items, setItems] = useState<null | any[]>(null);
-  const { searchParameter, setContentState } = useContext(MainContext);
+  const { searchParameter, setContentState, setLoadingBg } =
+    useContext(MainContext);
 
   useEffect(() => {
     async function readDocs(s: any) {
@@ -17,6 +18,7 @@ export default function Contents() {
       setItems(is);
     }
     readDocs(searchParameter);
+    setLoadingBg(false);
 
     // const itemArr: any[] = [];
     // const data = onSnapshot(
@@ -29,18 +31,21 @@ export default function Contents() {
     //   }
     // );
     // setItems(itemArr);
-  }, [searchParameter]);
+  }, [searchParameter, setLoadingBg]);
 
   return (
     <>
       {items && (
-        <div className="grid grid-cols-1 gap-x-1 gap-y-10 md:grid-cols-2 md:gap-x-10 md:gap-y-24">
+        <div className="grid grid-cols-1 gap-x-1 gap-y-10 md:grid-cols-2 md:gap-x-10 md:gap-y-24 animate-bgColorIn">
           {items.map((item: any) => {
             return (
               <div
                 key={item.public_id}
                 className="relative"
-                onClick={() => setContentState({ ...item })}
+                onClick={() => {
+                  setContentState({ ...item });
+                  setLoadingBg(true);
+                }}
               >
                 <Link href={`/content/${item.doc_id}`}>
                   <CloudinaryImage
@@ -51,9 +56,9 @@ export default function Contents() {
                     crop="fill"
                     sizes="100vw"
                   />
-                  <div className="absolute top-0 left-0 text-gray-400 text-xs">
+                  {/* <div className="absolute top-0 left-0 text-gray-400 text-xs">
                     {dateFormat(item.photo_captured_at)}{" "}
-                  </div>
+                  </div> */}
                 </Link>
               </div>
             );

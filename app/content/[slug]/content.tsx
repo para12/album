@@ -11,7 +11,7 @@ import { useSession } from "next-auth/react";
 export default function Content({ docId }: { docId: string }) {
   const session = useSession();
   const [item, setItem] = useState<null | any>(null);
-  const { setContentState } = useContext(MainContext);
+  const { setContentState, setLoadingBg } = useContext(MainContext);
 
   useEffect(() => {
     async function readDoc(id: any) {
@@ -19,63 +19,69 @@ export default function Content({ docId }: { docId: string }) {
       setItem(i);
     }
     readDoc(docId);
-  }, [docId]);
+    setLoadingBg(false);
+  }, [docId, setLoadingBg]);
 
   return (
-    <div className="mx-auto">
-      {item && (
-        <div>
-          <CloudinaryImage
-            src={item.public_id}
-            alt={addSharpToTag(item.tag)}
-            width={1000}
-            height={1000}
-            sizes="100vw"
-          />
-          <div className="w-full my-3 text-right">
-            {dateFormat(item.photo_captured_at)} {addSharpToTag(item.tag)}
-          </div>
-          <div className="md:px-20">
-            <div className="my-20">{item.text}</div>
-            <div>
-              {session.status == "authenticated" &&
-                session.data?.user?.email == item.author && (
-                  <div
-                    className="font-medium flex justify-end"
-                    aria-current="page"
-                  >
-                    <Link
-                      href={{
-                        pathname: "/edit",
-                        query: {
-                          mode: "update",
-                        },
-                      }}
-                      className="hover:text-gray-400 hover:fill-current"
-                    >
-                      <span
-                        className="flex"
-                        onClick={() => setContentState(item)}
-                      >
-                        edit{" "}
-                        <svg
-                          width="24"
-                          height="24"
-                          xmlns="http://www.w3.org/2000/svg"
-                          fillRule="evenodd"
-                          clipRule="evenodd"
-                        >
-                          <path d="M21.883 12l-7.527 6.235.644.765 9-7.521-9-7.479-.645.764 7.529 6.236h-21.884v1h21.883z" />
-                        </svg>
-                      </span>
-                    </Link>
-                  </div>
-                )}
+    <>
+      <div className="mx-auto mb-10">
+        {item && (
+          <div>
+            <CloudinaryImage
+              src={item.public_id}
+              alt={addSharpToTag(item.tag)}
+              width={1000}
+              height={1000}
+              sizes="100vw"
+            />
+            <div className="w-full my-3 text-right">
+              {dateFormat(item.photo_captured_at)} {addSharpToTag(item.tag)}
             </div>
-            <Comments docId={item.doc_id} />
+            <div className="md:px-20">
+              <div className="my-20">{item.text}</div>
+              <Comments docId={item.doc_id} />
+              <div>
+                {session.status == "authenticated" &&
+                  session.data?.user?.email == item.author && (
+                    <div
+                      className="font-medium flex justify-end"
+                      aria-current="page"
+                    >
+                      <Link
+                        href={{
+                          pathname: "/edit",
+                          query: {
+                            mode: "update",
+                          },
+                        }}
+                        className="hover:text-gray-400 hover:fill-current"
+                      >
+                        <span
+                          className="flex"
+                          onClick={() => {
+                            setLoadingBg(true);
+                            setContentState(item);
+                          }}
+                        >
+                          edit{" "}
+                          <svg
+                            width="24"
+                            height="24"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fillRule="evenodd"
+                            clipRule="evenodd"
+                          >
+                            <path d="M21.883 12l-7.527 6.235.644.765 9-7.521-9-7.479-.645.764 7.529 6.236h-21.884v1h21.883z" />
+                          </svg>
+                        </span>
+                      </Link>
+                    </div>
+                  )}
+              </div>
+            </div>
           </div>
-        </div>
-      )}
-    </div>
+        )}
+      </div>
+    </>
   );
 }

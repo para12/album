@@ -9,7 +9,7 @@ import {
   getCloudinaryUploadSignature,
   updateDocument,
 } from "../common/serverfn";
-import { convertTag } from "@/app/common/util";
+import { convertTag, dateFormatTest } from "@/app/common/util";
 import { useSession } from "next-auth/react";
 import { MainContext } from "../context/MainContext";
 
@@ -20,6 +20,7 @@ export default function UploadButton() {
     tag,
     text,
     photoCapturedAt,
+    setPhotoCapturedAt,
     imageFile,
     photoUploaded,
     publicId,
@@ -113,8 +114,12 @@ export default function UploadButton() {
             <span
               className="flex"
               onClick={(e) => {
-                setLoadingBg(true);
-                onClickUpload(e);
+                if (dateFormatTest(photoCapturedAt)) {
+                  setLoadingBg(true);
+                  onClickUpload(e);
+                } else {
+                  setPhotoCapturedAt("재입력");
+                }
               }}
             >
               <svg
@@ -139,8 +144,12 @@ export default function UploadButton() {
           <span
             className="flex"
             onClick={(e) => {
-              setLoadingBg(true);
-              onClickUpdate(e);
+              if (dateFormatTest(photoCapturedAt)) {
+                setLoadingBg(true);
+                onClickUpdate(e);
+              } else {
+                setPhotoCapturedAt("재입력");
+              }
             }}
           >
             <svg

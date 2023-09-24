@@ -4,7 +4,6 @@ import Link from "next/link";
 import CloudinaryImage from "./common/cloudinaryImage";
 import { useContext, useEffect, useState } from "react";
 import { MainContext } from "./context/MainContext";
-import { dateFormat } from "./common/util";
 import { readDocsWithConstraints } from "./common/serverfn";
 
 export default function Contents() {

@@ -1,6 +1,6 @@
 "use client";
 import CloudinaryImage from "@/app/common/cloudinaryImage";
-import { addSharpToTag, dateFormat } from "@/app/common/util";
+import { addSharpToTag } from "@/app/common/util";
 import Comments from "./comments";
 import { useContext, useEffect, useState } from "react";
 import Link from "next/link";
@@ -35,7 +35,7 @@ export default function Content({ docId }: { docId: string }) {
               sizes="100vw"
             />
             <div className="w-full my-3 text-right">
-              {dateFormat(item.photo_captured_at)} {addSharpToTag(item.tag)}
+              {item.photo_captured_at} {addSharpToTag(item.tag)}
             </div>
             <div className="md:px-20">
               <div className="my-20">{item.text}</div>

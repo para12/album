@@ -36,9 +36,11 @@ export default function ImageUpload() {
           const regex = RegExp(
             /^\d{4}:(0[1-9]|1[012]):(0[1-9]|[12][0-9]|3[01])$/
           );
-          setPhotoCapturedAt(regex.test(capuredAt) ? capuredAt : "1900:01:01");
+          setPhotoCapturedAt(
+            regex.test(capuredAt) ? capuredAt.replace(/:/g, "/") : "1900/01/01"
+          );
         } else {
-          setPhotoCapturedAt("1900:01:01");
+          setPhotoCapturedAt("1900/01/01");
         }
         setImageChanged(true);
       }

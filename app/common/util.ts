@@ -1,8 +1,8 @@
 import GoogleProvider from "next-auth/providers/google";
 
-export const dateFormat = (date: string) => {
-  return date.replace(/:/g, ".");
-};
+// export const dateFormat = (date: string) => {
+//   return date.replace(/:/g, ".");
+// };
 
 export const convertTag = (tag: string) => {
   const tagTrimmed = tag.replace(/\s/g, "");
@@ -38,4 +38,9 @@ export const authOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
     }),
   ],
+};
+
+export const dateFormatTest = (s: string) => {
+  const regex = RegExp(/^\d{4}\/(0[1-9]|1[012])\/(0[1-9]|[12][0-9]|3[01])$/);
+  return regex.test(s);
 };

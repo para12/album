@@ -7,8 +7,7 @@ export const dateFormat = (date: string) => {
 export const convertTag = (tag: string) => {
   const tagTrimmed = tag.replace(/\s/g, "");
   const tagArray = tagTrimmed.split("#");
-  tagArray.shift();
-  return tagArray;
+  return tagArray.filter((u) => u != "");
 };
 
 export const addSharpToTag = (tagArray: any) => {

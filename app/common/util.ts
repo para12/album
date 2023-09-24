@@ -22,7 +22,11 @@ export const addSharpToTag = (tagArray: any) => {
 };
 
 export const GetUsername = (author: string) =>
-  author == "hyunwooda@gmail.com" ? "현우" : null;
+  author == "hyunwooda@gmail.com"
+    ? "현우"
+    : author == "sunyoung.joo1@gmail.com"
+    ? "현우"
+    : null;
 
 export const trimDate = (date: string) => date.substring(2, 15);
 

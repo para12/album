@@ -126,6 +126,10 @@ export const updateDocument = async (docId: any, update_info: any) => {
 };
 
 export const GetUploadPermission = async (user: any) => {
-  return user && user.email == process.env.SUPERUSER;
+  return (
+    user &&
+    (user.email == process.env.SUPERUSER ||
+      user.email == process.env.SUPERUSER2)
+  );
 };
 

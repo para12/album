@@ -14,6 +14,7 @@ const NavBar = () => {
   const { setSearchParameter, setLoadingBg } = useContext(MainContext);
   const pathname = usePathname();
   const [isSuper, setIsSuper] = useState(false);
+  const [isSearch, setIsSearch] = useState(false);
 
   useEffect(() => {
     async function uploadPermit() {
@@ -25,7 +26,7 @@ const NavBar = () => {
   }, [session.data?.user]);
 
   return (
-    <header className="flex flex-wrap md:justify-start md:flex-nowrap z-50 bg-white text-sm py-4 dark:bg-gray-800 w-full h-20 mt-2 mb-5">
+    <header className="flex flex-wrap md:mx-10 md:justify-between md:flex-nowrap z-50 bg-white text-sm py-4 dark:bg-gray-800 w-full h-20 mt-2 mb-5">
       <nav
         className="max-w-[85rem] w-full mx-auto px-4 md:flex md:items-center md:justify-between"
         aria-label="Global"
@@ -91,6 +92,61 @@ const NavBar = () => {
             className="hs-collapse hidden overflow-hidden transition-all duration-300 basis-full grow md:block"
           >
             <div className="flex flex-col gap-5 mt-5 md:flex-row md:items-center md:justify-end md:mt-0 md:pl-5">
+              {pathname == "/" && (
+                <div className="flex flex-rowjustify-between ">
+                  {isSearch && (
+                    <div className="flex flex-col gap-1">
+                      <input
+                        type="text"
+                        className="py-3 px-4 block w-30 h-5 border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400"
+                        placeholder="tag"
+                        value={text}
+                        onChange={(e) => setText(e.target.value)}
+                      />
+                      <div className="flex flex-row justify-between">
+                        <input
+                          type="text"
+                          className="py-3 px-4 block w-20 h-5 border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400"
+                          placeholder="start"
+                          value={startDate}
+                          onChange={(e) => setStartDate(e.target.value)}
+                        />
+                        ~
+                        <input
+                          type="text"
+                          className="py-3 px-4 block w-20 h-5 border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400"
+                          placeholder="end"
+                          value={endDate}
+                          onChange={(e) => setEndDate(e.target.value)}
+                        />
+                      </div>
+                    </div>
+                  )}
+                  <div
+                    className="w-10 font-sm text-center flex flex-col justify-center items-center"
+                    onClick={() => {
+                      if (isSearch) {
+                        setSearchParameter({ tag: text, startDate, endDate });
+                        setIsSearch(false);
+                      } else {
+                        setIsSearch(true);
+                      }
+                    }}
+                  >
+                    <svg
+                      width="24"
+                      height="24"
+                      viewBox="0 0 30 30"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fillRule="evenodd"
+                      clipRule="evenodd"
+                    >
+                      <path d="M15.853 16.56c-1.683 1.517-3.911 2.44-6.353 2.44-5.243 0-9.5-4.257-9.5-9.5s4.257-9.5 9.5-9.5 9.5 4.257 9.5 9.5c0 2.442-.923 4.67-2.44 6.353l7.44 7.44-.707.707-7.44-7.44zm-6.353-15.56c4.691 0 8.5 3.809 8.5 8.5s-3.809 8.5-8.5 8.5-8.5-3.809-8.5-8.5 3.809-8.5 8.5-8.5z" />
+                    </svg>
+                  </div>
+                </div>
+              )}
+
               {session.status == "authenticated" &&
                 isSuper &&
                 pathname.substring(0, 5) != "/edit" && (
@@ -119,54 +175,6 @@ const NavBar = () => {
                     </Link>
                   </div>
                 )}
-              {pathname == "/" && (
-                <div className="flex flex-rowjustify-between ">
-                  <div className="flex flex-col gap-1">
-                    <input
-                      type="text"
-                      className="py-3 px-4 block w-30 h-5 border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400"
-                      placeholder="tag"
-                      value={text}
-                      onChange={(e) => setText(e.target.value)}
-                    />
-                    <div className="flex flex-row justify-between">
-                      <input
-                        type="text"
-                        className="py-3 px-4 block w-20 h-5 border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400"
-                        placeholder="start"
-                        value={startDate}
-                        onChange={(e) => setStartDate(e.target.value)}
-                      />
-                      ~
-                      <input
-                        type="text"
-                        className="py-3 px-4 block w-20 h-5 border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400"
-                        placeholder="end"
-                        value={endDate}
-                        onChange={(e) => setEndDate(e.target.value)}
-                      />
-                    </div>
-                  </div>
-                  <div
-                    className="w-10 font-sm text-center flex flex-col justify-center items-center"
-                    onClick={() =>
-                      setSearchParameter({ tag: text, startDate, endDate })
-                    }
-                  >
-                    <svg
-                      width="24"
-                      height="24"
-                      viewBox="0 0 30 30"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fillRule="evenodd"
-                      clipRule="evenodd"
-                    >
-                      <path d="M15.853 16.56c-1.683 1.517-3.911 2.44-6.353 2.44-5.243 0-9.5-4.257-9.5-9.5s4.257-9.5 9.5-9.5 9.5 4.257 9.5 9.5c0 2.442-.923 4.67-2.44 6.353l7.44 7.44-.707.707-7.44-7.44zm-6.353-15.56c4.691 0 8.5 3.809 8.5 8.5s-3.809 8.5-8.5 8.5-8.5-3.809-8.5-8.5 3.809-8.5 8.5-8.5z" />
-                    </svg>
-                  </div>
-                </div>
-              )}
-
               {session.status != "authenticated" ? (
                 <div>
                   <button

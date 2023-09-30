@@ -38,7 +38,9 @@ export default function Content({ docId }: { docId: string }) {
               {item.photo_captured_at} {addSharpToTag(item.tag)}
             </div>
             <div className="md:px-20">
-              <div className="my-20">{item.text}</div>
+              <div className="my-20 whitespace-pre-wrap text-base">
+                {item.text}
+              </div>
               <Comments docId={item.doc_id} />
               <div>
                 {session.status == "authenticated" &&

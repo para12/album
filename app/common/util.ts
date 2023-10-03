@@ -14,7 +14,7 @@ export const addSharpToTag = (tagArray: any) => {
   if (tagArray) {
     let tag = "";
     tagArray.map((u: any) => {
-      tag = tag + "#" + u;
+      tag = tag + " #" + u;
     });
     return tag;
   } else "";

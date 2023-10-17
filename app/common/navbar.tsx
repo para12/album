@@ -50,7 +50,7 @@ const NavBar = () => {
               isSuper &&
               pathname.substring(0, 5) != "/edit" && (
                 <div
-                  className="font-medium text-gray-600 hover:text-gray-400 dark:text-gray-400 dark:hover:text-gray-500"
+                  className="font-medium text-gray-600 hover:text-gray-400 hidden md:block"
                   aria-current="page"
                   onClick={() => setLoadingBg(true)}
                 >

@@ -41,7 +41,7 @@ export default function Content({ docId }: { docId: string }) {
               {item.text}
             </div>
             <Comments docId={item.doc_id} />
-            <div className="invisible md:visible">
+            <div className="hidden md:block">
               {session.status == "authenticated" &&
                 session.data?.user?.email == item.author && (
                   <div

@@ -23,67 +23,65 @@ export default function Content({ docId }: { docId: string }) {
   }, [docId, setLoadingBg]);
 
   return (
-    <>
-      <div className="mx-auto mb-10">
-        {item && (
-          <div>
-            <CloudinaryImage
-              src={item.public_id}
-              alt={addSharpToTag(item.tag)}
-              width={1000}
-              height={1000}
-              sizes="100vw"
-            />
-            <div className="w-full my-3 text-right">
-              {item.photo_captured_at} {addSharpToTag(item.tag)}
+    <div className="mx-3   md:mx-auto md:mb-10">
+      {item && (
+        <div>
+          <CloudinaryImage
+            src={item.public_id}
+            alt={addSharpToTag(item.tag)}
+            width={1000}
+            height={1000}
+            sizes="100vw"
+          />
+          <div className="w-full my-3 text-right">
+            {item.photo_captured_at} {addSharpToTag(item.tag)}
+          </div>
+          <div className="px-4 md:px-20">
+            <div className="my-20 whitespace-pre-wrap text-base">
+              {item.text}
             </div>
-            <div className="md:px-20">
-              <div className="my-20 whitespace-pre-wrap text-base">
-                {item.text}
-              </div>
-              <Comments docId={item.doc_id} />
-              <div>
-                {session.status == "authenticated" &&
-                  session.data?.user?.email == item.author && (
-                    <div
-                      className="font-medium flex justify-end"
-                      aria-current="page"
+            <Comments docId={item.doc_id} />
+            <div className="invisible md:visible">
+              {session.status == "authenticated" &&
+                session.data?.user?.email == item.author && (
+                  <div
+                    className="font-medium flex justify-end"
+                    aria-current="page"
+                  >
+                    <Link
+                      href={{
+                        pathname: "/edit",
+                        query: {
+                          mode: "update",
+                        },
+                      }}
+                      className="hover:text-gray-400 hover:fill-current"
                     >
-                      <Link
-                        href={{
-                          pathname: "/edit",
-                          query: {
-                            mode: "update",
-                          },
+                      <span
+                        className="flex"
+                        onClick={() => {
+                          setLoadingBg(true);
+                          setContentState(item);
                         }}
-                        className="hover:text-gray-400 hover:fill-current"
                       >
-                        <span
-                          className="flex"
-                          onClick={() => {
-                            setLoadingBg(true);
-                            setContentState(item);
-                          }}
+                        edit{" "}
+                        <svg
+                          width="24"
+                          height="24"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fillRule="evenodd"
+                          clipRule="evenodd"
                         >
-                          edit{" "}
-                          <svg
-                            width="24"
-                            height="24"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fillRule="evenodd"
-                            clipRule="evenodd"
-                          >
-                            <path d="M21.883 12l-7.527 6.235.644.765 9-7.521-9-7.479-.645.764 7.529 6.236h-21.884v1h21.883z" />
-                          </svg>
-                        </span>
-                      </Link>
-                    </div>
-                  )}
-              </div>
+                          <path d="M21.883 12l-7.527 6.235.644.765 9-7.521-9-7.479-.645.764 7.529 6.236h-21.884v1h21.883z" />
+                        </svg>
+                      </span>
+                    </Link>
+                  </div>
+                )}
             </div>
           </div>
-        )}
-      </div>
-    </>
+        </div>
+      )}
+    </div>
   );
 }

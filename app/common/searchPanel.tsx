@@ -1,7 +1,8 @@
 "use client";
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { MainContext } from "../context/MainContext";
 import { SearchIcon } from "./svg";
+import { readTags } from "./serverfn";
 
 const SearchPanel = () => {
   const [text, setText] = useState("");
@@ -9,6 +10,15 @@ const SearchPanel = () => {
   const [endDate, setEndDate] = useState("");
   const { setSearchParameter } = useContext(MainContext);
   const [isSearch, setIsSearch] = useState(false);
+  const [tag, setTag] = useState<null | any>();
+
+  useEffect(() => {
+    async function readTag() {
+      const i = await readTags();
+      setTag(i);
+    }
+    readTag();
+  }, []);
 
   return (
     <div className="flex flex-rowjustify-between ">
@@ -44,7 +54,14 @@ const SearchPanel = () => {
         className="w-10 font-sm text-center flex flex-col justify-center items-center"
         onClick={() => {
           if (isSearch) {
-            setSearchParameter({ tag: text, startDate, endDate });
+            const matchedTag = text
+              ? Object.keys(tag)
+                  ?.map((e: string) =>
+                    e.toLowerCase().search(text.toLowerCase()) >= 0 ? e : null
+                  )
+                  .filter((u: string | null) => !!u)
+              : [];
+            setSearchParameter({ tag: matchedTag ?? [], startDate, endDate });
             setIsSearch(false);
           } else {
             setIsSearch(true);

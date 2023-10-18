@@ -17,7 +17,8 @@ export default function EditProvider({ children }: any) {
     uploadMode ? undefined : item.photo_captured_at
   );
   const [text, setText] = useState(uploadMode ? "" : item.text);
-  const [tag, setTag] = useState(uploadMode ? "" : addSharpToTag(item.tag));
+  const oldTag = uploadMode ? "" : addSharpToTag(item.tag);
+  const [tag, setTag] = useState(oldTag);
   const [docId, setDocId] = useState(uploadMode ? "" : item.doc_id);
   const [publicId, setPublicId] = useState(uploadMode ? "" : item.public_id);
   const [imageFile, setImageFile] = useState(undefined);
@@ -49,6 +50,7 @@ export default function EditProvider({ children }: any) {
         setPublicId,
         imageChanged,
         setImageChanged,
+        oldTag,
       }}
     >
       {children}

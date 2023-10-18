@@ -44,3 +44,34 @@ export const dateFormatTest = (s: string) => {
   const regex = RegExp(/^\d{4}\/(0[1-9]|1[012])\/(0[1-9]|[12][0-9]|3[01])$/);
   return regex.test(s);
 };
+
+export const updateTagSet = (
+  tagsSet: any,
+  oldTag: string[],
+  newTag: string[]
+) => {
+  let newTagsSet = { ...tagsSet };
+  const toBeDeleted = oldTag.filter((e) => !newTag.includes(e));
+  const toBeAdded = newTag.filter((e) => !oldTag.includes(e));
+
+  if (toBeDeleted.length > 0) {
+    toBeDeleted.forEach((e) => {
+      if (newTagsSet[e] > 1) {
+        newTagsSet = { ...newTagsSet, [e]: newTagsSet[e] - 1 };
+      } else {
+        delete newTagsSet[e];
+      }
+    });
+  }
+  if (toBeAdded.length > 0) {
+    const tagsKey = Object.keys(newTagsSet);
+    toBeAdded.forEach((e) => {
+      if (tagsKey.includes(e)) {
+        newTagsSet = { ...newTagsSet, [e]: newTagsSet[e] + 1 };
+      } else {
+        newTagsSet = { ...newTagsSet, [e]: 1 };
+      }
+    });
+  }
+  return newTagsSet;
+};

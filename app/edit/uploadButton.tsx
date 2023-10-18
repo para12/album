@@ -5,6 +5,7 @@ import { EditContext } from "../context/EditContext";
 import { useRouter } from "next/navigation";
 import {
   addDocument,
+  addTag,
   deleteCloudinaryImage,
   getCloudinaryUploadSignature,
   updateDocument,
@@ -25,6 +26,7 @@ export default function UploadButton() {
     photoUploaded,
     publicId,
     imageChanged,
+    oldTag,
   } = useContext(EditContext);
   const { setLoadingBg } = useContext(MainContext);
 
@@ -72,6 +74,7 @@ export default function UploadButton() {
     };
 
     const docId = await addDocument(add_info);
+    await addTag(convertTag(oldTag), convertTag(tag));
     router.push(`/content/${docId}`);
   }
 
@@ -96,6 +99,7 @@ export default function UploadButton() {
         };
 
     await updateDocument(docId, update_info);
+    await addTag(convertTag(oldTag), convertTag(tag));
     if (imageChanged) {
       await deleteCloudinaryImage(publicId);
     }

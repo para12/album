@@ -11,9 +11,11 @@ import {
   getDocs,
   orderBy,
   query,
+  setDoc,
   updateDoc,
   where,
 } from "firebase/firestore";
+import { updateTagSet } from "./util";
 
 export const getCloudinaryUploadSignature = async () => {
   const timestamp = Math.round(new Date().getTime() / 1000);
@@ -43,16 +45,14 @@ export const readDocsWithConstraints = async (s: any) => {
   const itemArr: any[] = [];
 
   function setConstraints(searchParameter: {
-    tag: string;
+    tag: string[];
     startDate: string;
     endDate: string;
   }) {
     const constraints = [];
     constraints.push(orderBy("photo_captured_at", "asc"));
-    if (searchParameter.tag) {
-      constraints.push(
-        where("tag", "array-contains", searchParameter.tag as string)
-      );
+    if (searchParameter.tag.length > 0) {
+      constraints.push(where("tag", "array-contains-any", searchParameter.tag));
     }
     if (searchParameter.startDate) {
       constraints.push(
@@ -76,6 +76,11 @@ export const readDocsWithConstraints = async (s: any) => {
 
 export const readSingleDoc = async (docId: any) => {
   const data = await getDoc(doc(db, "article", docId));
+  return data.data();
+};
+
+export const readTags = async () => {
+  const data = await getDoc(doc(db, "tags", "9C0vypkn0zkG5gONvQyx"));
   return data.data();
 };
 
@@ -112,6 +117,17 @@ export const addDocument = async (add_info: any) => {
       doc_id: r.id,
     });
     return r.id;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const addTag = async (oldTag: string[], newTag: string[]) => {
+  try {
+    const data = await getDoc(doc(db, "tags", "9C0vypkn0zkG5gONvQyx"));
+    const tagsSet = data.data();
+    const newTagsSet = updateTagSet(tagsSet, oldTag, newTag);
+    await setDoc(doc(db, "tags", "9C0vypkn0zkG5gONvQyx"), newTagsSet as any);
   } catch (err) {
     console.log(err);
   }

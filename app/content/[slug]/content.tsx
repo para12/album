@@ -22,17 +22,23 @@ export default function Content({ docId }: { docId: string }) {
     setLoadingBg(false);
   }, [docId, setLoadingBg]);
 
+  const imageSize =
+    item?.photo_orientation && item.photo_orientation == "vertical"
+      ? 500
+      : 1000;
   return (
     <div className="mx-3   md:mx-auto md:mb-10">
       {item && (
         <div>
-          <CloudinaryImage
-            src={item.public_id}
-            alt={addSharpToTag(item.tag)}
-            width={1000}
-            height={1000}
-            sizes="100vw"
-          />
+          <div className="flex justify-center">
+            <CloudinaryImage
+              src={item.public_id}
+              alt={addSharpToTag(item.tag)}
+              width={imageSize}
+              height={imageSize}
+              sizes="100vw"
+            />
+          </div>
           <div className="w-full my-3 text-right">
             {item.photo_captured_at} {addSharpToTag(item.tag)}
           </div>

@@ -17,6 +17,7 @@ export default function ImageUpload() {
     publicId,
     setImageChanged,
     uploadMode,
+    setPhotoOrientation,
   } = useContext(EditContext);
 
   const [imageSrc, setImageSrc] = useState<any>(undefined);
@@ -41,6 +42,13 @@ export default function ImageUpload() {
           );
         } else {
           setPhotoCapturedAt("1900/01/01");
+        }
+        if (imageMeta && imageMeta.Orientation) {
+          setPhotoOrientation(
+            (imageMeta.Orientation?.value as number) > 4
+              ? "vertical"
+              : "horizontal"
+          );
         }
         setImageChanged(true);
       }

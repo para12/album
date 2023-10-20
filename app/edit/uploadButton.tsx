@@ -27,6 +27,7 @@ export default function UploadButton() {
     publicId,
     imageChanged,
     oldTag,
+    photoOrientation,
   } = useContext(EditContext);
   const { setLoadingBg } = useContext(MainContext);
 
@@ -71,6 +72,7 @@ export default function UploadButton() {
       tag: convertTag(tag),
       text,
       author: session.data?.user?.email,
+      photo_orientation: photoOrientation,
     };
 
     const docId = await addDocument(add_info);
@@ -86,6 +88,7 @@ export default function UploadButton() {
       ? {
           photo_url: (data as any).secure_url,
           public_id: (data as any).public_id,
+          photo_orientation: photoOrientation,
           tag: convertTag(tag),
           text,
           photo_captured_at: photoCapturedAt,

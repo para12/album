@@ -24,6 +24,7 @@ export default function EditProvider({ children }: any) {
   const [imageFile, setImageFile] = useState(undefined);
   const [photoUploaded, setPhotoUploaded] = useState(false);
   const [imageChanged, setImageChanged] = useState(false);
+  const [photoOrientation, setPhotoOrientation] = useState("horizontal");
 
   useEffect(() => {
     setLoadingBg(false);
@@ -51,6 +52,8 @@ export default function EditProvider({ children }: any) {
         imageChanged,
         setImageChanged,
         oldTag,
+        photoOrientation,
+        setPhotoOrientation,
       }}
     >
       {children}

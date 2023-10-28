@@ -34,7 +34,7 @@ const NavBar = () => {
             className="flex-none text-xl font-semibold dark:text-white"
             href="/"
           >
-            <span onClick={() => setLoadingBg(true)}>Sonia & Jinu</span>
+            <span onClick={() => setLoadingBg(true)}>SONIA n JINU</span>
           </a>
           <SideMenuButtonToggle />
         </div>

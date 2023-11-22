@@ -46,7 +46,7 @@ export default function Content({ docId }: { docId: string }) {
             <div className="my-20 whitespace-pre-wrap text-base">
               {item.text}
             </div>
-            <Comments docId={item.doc_id} />
+            {/* <Comments docId={item.doc_id} /> */}
             <div className="hidden md:block">
               {session.status == "authenticated" &&
                 session.data?.user?.email == item.author && (

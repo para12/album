@@ -24,8 +24,8 @@ export default function Content({ docId }: { docId: string }) {
 
   const imageSize =
     item?.photo_orientation && item.photo_orientation == "vertical"
-      ? 500
-      : 1000;
+      ? 700
+      : 2500;
   return (
     <div className="mx-3   md:mx-auto md:mb-10">
       {item && (
